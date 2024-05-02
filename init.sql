@@ -1,6 +1,6 @@
-drop schema if exists prescription;
-create schema prescription;
-use prescription;
+drop schema if exists drug;
+create schema drug;
+use drug;
 
 create table doctor(
 	id int primary key auto_increment,
@@ -89,28 +89,6 @@ insert into drug_cost
 values
 	(1, 10010, 0.10);
 
--- Strong Entities:
--- doctor
--- patient
--- drug
--- pharmacy`
-
--- Weak Entities:
--- prescription
--- prescription_fill
--- drug_cost
-
-create table prescription_fill (
-	rxid int not null,
-	fill_no int not null,
-	fill_date date default (curdate()),
-	pharmacy_id int,
-	cost numeric(8,2),
-	primary key (rxid, fill_no),
-	foreign key(rxid) references prescription(rxid),
-	foreign key(pharmacy_id) references pharmacy(id)
-);
-
 insert into doctor (id, ssn, last_name, first_name, specialty, practice_since)
 values
 	(1, '123456789', 'Smith', 'John', 'Cardiology', 2005),
@@ -121,7 +99,7 @@ insert into patient (id, ssn, last_name, first_name, street, city, state, zip, b
 values
 	(1, '123321123', 'Brown', 'Taylor', '123 Oak', 'Monterey', 'CA', '93940', '2000-08-20', 1),
 	(2, '951456753', 'Davis', 'Tyler', '45 Pine', 'Salinas', 'CA', '93901', '1970-10-26', 1),
-	(3, '954231564', 'Martinez', 'Jessica', '983 Main', 'Salinas', 'CA', '93907', 2);
+	(3, '954231564', 'Martinez', 'Jessica', '983 Main', 'Salinas', 'CA', '93907', '1999-10-20', 2);
 
 insert into prescription (rxid, doctor_id, patient_id, drug_id, quantity, create_date, refills)
 values
